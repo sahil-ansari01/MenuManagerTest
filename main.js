@@ -3,43 +3,39 @@ const choosePrice = document.getElementById('choose-price');
 const chooseDish = document.getElementById('choose-dish');
 const chooseTable = document.getElementById('choose-table');
 const addToBillBtn = document.querySelector('.add-to-bill');
-const table1Ul = document.querySelector('.table1-ul')
-const table2Ul = document.querySelector('.table2-ul')
-const table3Ul = document.querySelector('.table3-ul')
+const table1Ul = document.querySelector('.table1-ul');
+const table2Ul = document.querySelector('.table2-ul');
+const table3Ul = document.querySelector('.table3-ul');
 
-document.addEventListener('DOMContentLoaded', () => {
-    axios.get(`https://crudcrud.com/api/8d8fe5ac183c482bb2962737291261d1/orders`)
-    .then( (res) => {
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const res = await axios.get(`https://crudcrud.com/api/b278258cf23c426ca62c7cec2f8d9658/orders`);
         for (let i = 0; i < res.data.length; i++) {
-            // console.log(res.data[i].table )
             const order = res.data[i];
             showOrder(order);
         }
-    })
-    .catch( (err) => {
+    } catch (err) {
         console.log(err);
-    })
-})
+    }
+});
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     let order = {
         price: choosePrice.value,
         dish: chooseDish.value,
         table: chooseTable.value
-    } 
+    };
 
-    axios.post(`https://crudcrud.com/api/8d8fe5ac183c482bb2962737291261d1/orders`, order)
-    .then( (res) => {
+    try {
+        const res = await axios.post(`https://crudcrud.com/api/b278258cf23c426ca62c7cec2f8d9658/orders`, order);
         createOrder(order);
         clearFields();
-    })
-    .catch( (err) => {
-        console.log(err)
-    })
-
-})
+    } catch (err) {
+        console.log(err);
+    }
+});
 
 function clearFields() {
     choosePrice.value = '';
@@ -51,24 +47,23 @@ function showOrder(order) {
     createOrder(order);
 }
 
-function createOrder(order) {
+async function createOrder(order) {
     const li = document.createElement('li');
     li.className = 'list-items';
     const liTextNode = document.createTextNode(`${order.dish} - $${order.price}`);
-    
+
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'Delete';
     deleteBtn.className = 'btn btn-danger delete-btn';
 
-    deleteBtn.addEventListener('click', () => {
-        axios.delete(`https://crudcrud.com/api/8d8fe5ac183c482bb2962737291261d1/orders/${order._id}`)
-        .then( (res) => {
+    deleteBtn.addEventListener('click', async () => {
+        try {
+            await axios.delete(`https://crudcrud.com/api/b278258cf23c426ca62c7cec2f8d9658/orders/${order._id}`);
             li.remove();
-        })
-        .catch( (err) => {
+        } catch (err) {
             console.log(err);
-        })
-    })
+        }
+    });
 
     li.appendChild(liTextNode);
     li.appendChild(deleteBtn);
