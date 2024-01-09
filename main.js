@@ -30,11 +30,14 @@ form.addEventListener('submit', async (e) => {
 
     try {
         const res = await axios.post(`https://crudcrud.com/api/b278258cf23c426ca62c7cec2f8d9658/orders`, order);
-        createOrder(order);
+        createOrder(res.data);
         clearFields();
+        refreshPage();
     } catch (err) {
         console.log(err);
     }
+
+
 });
 
 function clearFields() {
@@ -79,4 +82,8 @@ async function createOrder(order) {
             table3Ul.appendChild(li);
             break;
     }
+}
+
+function refreshPage() {
+    location.reload(true);
 }
