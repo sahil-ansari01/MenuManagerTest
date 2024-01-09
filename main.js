@@ -9,7 +9,7 @@ const table3Ul = document.querySelector('.table3-ul');
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const res = await axios.get(`https://crudcrud.com/api/b278258cf23c426ca62c7cec2f8d9658/orders`);
+        const res = await axios.get(`https://crudcrud.com/api/f73e3c4faeff4cd5ab9f59890b4f0703/orders`);
         for (let i = 0; i < res.data.length; i++) {
             const order = res.data[i];
             showOrder(order);
@@ -29,7 +29,7 @@ form.addEventListener('submit', async (e) => {
     };
 
     try {
-        const res = await axios.post(`https://crudcrud.com/api/b278258cf23c426ca62c7cec2f8d9658/orders`, order);
+        const res = await axios.post(`https://crudcrud.com/api/f73e3c4faeff4cd5ab9f59890b4f0703/orders`, order);
         createOrder(res.data);
         clearFields();
         refreshPage();
@@ -61,7 +61,7 @@ async function createOrder(order) {
 
     deleteBtn.addEventListener('click', async () => {
         try {
-            await axios.delete(`https://crudcrud.com/api/b278258cf23c426ca62c7cec2f8d9658/orders/${order._id}`);
+            await axios.delete(`https://crudcrud.com/api/f73e3c4faeff4cd5ab9f59890b4f0703/orders/${order._id}`);
             li.remove();
         } catch (err) {
             console.log(err);
